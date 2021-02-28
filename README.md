@@ -1,34 +1,199 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PickBazar Documentation
 
-## Getting Started
+# Introduction
 
-First, run the development server:
+Fastest E-commerce template built with React, NextJS, TypeScript, GraphQL, Type-GraphQL & Styled-Components. Its very easy to use, we used graphql and type-graphql, you can build your schema very easily. GraphQL playground makes it’s own documentation, your frontend team will love using it.
+
+# Tech We Have Used
+
+We have used monorepo folder structure with Yarn Workspace. In our template we have three different part Admin Dashboard, Shop and API. Tech specification for specific part is given below
+
+## Admin Dashboard
+
+- CRA
+- Apollo
+- BaseUI
+- Typescript
+- React Hook Form
+
+## Shop
+
+- NextJs
+- Apollo
+- Typescript
+- Styled Components
+- Stripe Integration
+- Formik
+
+## API
+
+- GraphQL
+- Type GraphQL
+
+## Shop {REST: API} Integration
+
+- SWR
+- NextJs
+- Typescript
+  ...
+
+<br><br><br>
+
+# Getting Started & Installation
+
+For getting started with the template you have to follow the below procedure. First navigate to the `pickbazar` directory. Then run below command for getting started with specific part.
 
 ```bash
-npm run dev
-# or
-yarn dev
+# on pickbazar directory
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br><br><br>
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Admin
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+For starting the admin dashboard part with corresponding api data run below commands.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+# for dev mode run below command
+yarn dev:admin
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Shop
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Configuration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Go to `/packages/shop` folder.
+1. Copy the contents of `.env.local.sample` into a new file called `.env.local`
+1. Put Your Stripe public api key in the `/packages/shop/.env.local` file's `NEXT_PUBLIC_STRIPE_PUBLIC_KEY` key.
 
-## Deploy on Vercel
+For starting the shop part with corresponding api run below commands.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# for dev mode run below command
+yarn dev:shop
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+
+## Shop Rest
+
+### Configuration
+
+1. Go to `/packages/shop-rest` folder.
+1. Copy the contents of `.env.local.sample` into a new file called `.env.local`
+1. Put Your Stripe public api key in the `/packages/shop-rest/.env.local` file's `NEXT_PUBLIC_STRIPE_PUBLIC_KEY` key.
+
+For starting the shop-rest part with corresponding api run below commands.
+
+```bash
+# for dev mode run below command
+yarn dev:shop-rest
+
+```
+
+## NOTE: For shop-rest we didn't provide any actual rest api integration we use SWR hook pattern and fetch data from public json. you need to edit those hook to integrate your actual API end point. please go to `packages/shop-rest/src/data` folder for those hooks. also need to implement load more functionality by your self.
+
+### If you want to test your production build admin or shop in local environment then run the below commands.
+
+## Admin
+
+```bash
+# build admin for production
+yarn build:admin
+
+# build api which in needed for local testing
+yarn build:api
+
+#start admin in production mode
+yarn serve:admin
+```
+
+<br><br><br><br><br><br><br>
+
+## Shop
+
+```bash
+# build shop for production
+yarn build:shop
+
+# build api which in needed for local testing
+yarn build:api
+
+# start shop in production mode
+yarn serve:shop
+```
+
+Note: for building the shop you need to had a running api (for demo purpose you can use our hosted api: https://pickbazar-api.now.sh/shop/graphql)
+
+<br><br><br>
+
+# Folder Structure & Customization
+
+`/packages/admin` : In this portion all the admin dashboard related coding and functions.
+
+`/packages/shop` : All the shop related coding and functions.
+
+`/packages/api` : API related code for both admin and shop section.
+
+admin related api codes are in `admin` folder
+
+shop related codes are in `shop` folder
+
+# Configuration & Deployment
+
+## [vercel.com](https://vercel.com/) (previously known as now.sh)
+
+If you want to host the template in vercel.com then follow the below command
+
+### API
+
+- Navigate to `packages/api`
+- Now run below command
+
+```bash
+vercel
+```
+
+<br><br><br><br>
+
+### Admin
+
+- After deploying the api you will get the api endpoint url. Put that url in the `packages/admin/.env`
+- also need to put it within `vercel.json` .
+
+```
+REACT_APP_API_URL={put_your_api_url_here}/admin/graphql;
+```
+
+- Navigate to `packages/admin`
+- Now run below command
+
+```bash
+vercel
+```
+
+### Shop
+
+- After deploying the api you will get the api endpoint url. Put that url in the `packages/shop/.env.local` and `vercel.json` file.
+
+```.env.local
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY= 'put_your_stripe_public_key'
+
+NEXT_PUBLIC_GRAPHQL_API_ENDPOINT= '{put_your_api_url_here.}/shop/graphql'
+```
+
+- Navigate to `packages/shop`
+- Now run below command
+
+```
+vercel
+```
+
+### Shop Rest
+
+`Note:` Please follow the above (shop) deployment procedure.
+
+## NOTE: for deploying to `vercel` you need to install `vercel-cli` on your machine for more information please visit [here](https://vercel.com/docs/cli?query=cli#introduction/vercel-cli-reference)
+
+** Note ** For more details information please visit our online documentation [here](https://docs-pickbazar.vercel.app)
